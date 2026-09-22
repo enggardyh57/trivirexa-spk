@@ -1,71 +1,92 @@
-###################
-What is CodeIgniter
-###################
+# SPK Pemilihan Laptop — Metode SAW
 
-CodeIgniter is an Application Development Framework - a toolkit - for people
-who build web sites using PHP. Its goal is to enable you to develop projects
-much faster than you could if you were writing code from scratch, by providing
-a rich set of libraries for commonly needed tasks, as well as a simple
-interface and logical structure to access these libraries. CodeIgniter lets
-you creatively focus on your project by minimizing the amount of code needed
-for a given task.
+Aplikasi **Sistem Pendukung Keputusan (SPK) Pemilihan Laptop** berbasis web yang digunakan untuk membantu pengguna menentukan rekomendasi laptop berdasarkan beberapa kriteria menggunakan metode **Simple Additive Weighting (SAW)**.
 
-*******************
-Release Information
-*******************
+Project ini dikembangkan menggunakan **CodeIgniter 3, PHP, dan MySQL**.
 
-This repo contains in-development code for future releases. To download the
-latest stable release please visit the `CodeIgniter Downloads
-<https://codeigniter.com/download>`_ page.
+## ✨ Features
 
-**************************
-Changelog and New Features
-**************************
+- Menampilkan daftar alternatif laptop
+- Pengelolaan data laptop
+- Pengelolaan kriteria dan bobot
+- Perhitungan menggunakan metode **Simple Additive Weighting (SAW)**
+- Normalisasi nilai setiap kriteria
+- Perankingan alternatif laptop
+- Menampilkan **5 laptop dengan peringkat teratas**
+- Pencarian dan pengurutan data laptop
+- Riwayat hasil rekomendasi
+- Tampilan hasil rekomendasi berdasarkan nilai akhir
 
-You can find a list of all changes for each release in the `user
-guide change log <https://github.com/bcit-ci/CodeIgniter/blob/develop/user_guide_src/source/changelog.rst>`_.
+## 🎯 Criteria
 
-*******************
-Server Requirements
-*******************
+Sistem menggunakan beberapa kriteria dalam proses penilaian laptop:
 
-PHP version 5.6 or newer is recommended.
+| Kriteria | Keterangan | Jenis |
+|---|---|---|
+| Harga | Harga laptop | Cost |
+| Processor | Performa processor | Benefit |
+| RAM | Kapasitas RAM | Benefit |
+| SSD | Kapasitas penyimpanan | Benefit |
+| Baterai | Kapasitas/daya tahan baterai | Benefit |
+| Berat | Berat laptop | Cost |
 
-It should work on 5.3.7 as well, but we strongly advise you NOT to run
-such old versions of PHP, because of potential security and performance
-issues, as well as missing features.
+Bobot masing-masing kriteria digunakan dalam proses perhitungan untuk menentukan nilai akhir setiap alternatif.
 
-************
-Installation
-************
+## 🧮 Metode SAW
 
-Please see the `installation section <https://codeigniter.com/userguide3/installation/index.html>`_
-of the CodeIgniter User Guide.
+Metode **Simple Additive Weighting (SAW)** dilakukan melalui beberapa tahapan:
 
-*******
-License
-*******
+1. Menentukan alternatif laptop.
+2. Menentukan kriteria dan bobot.
+3. Memberikan nilai pada setiap alternatif berdasarkan kriteria.
+4. Melakukan normalisasi matriks keputusan.
+5. Mengalikan nilai hasil normalisasi dengan bobot masing-masing kriteria.
+6. Menjumlahkan seluruh nilai untuk mendapatkan nilai preferensi.
+7. Melakukan perangkingan berdasarkan nilai preferensi.
+8. Menampilkan laptop dengan peringkat tertinggi sebagai rekomendasi.
 
-Please see the `license
-agreement <https://github.com/bcit-ci/CodeIgniter/blob/develop/user_guide_src/source/license.rst>`_.
+### Rumus Normalisasi
 
-*********
-Resources
-*********
+Untuk kriteria **Benefit**:
 
--  `User Guide <https://codeigniter.com/docs>`_
--  `Contributing Guide <https://github.com/bcit-ci/CodeIgniter/blob/develop/contributing.md>`_
--  `Language File Translations <https://github.com/bcit-ci/codeigniter3-translations>`_
--  `Community Forums <http://forum.codeigniter.com/>`_
--  `Community Wiki <https://github.com/bcit-ci/CodeIgniter/wiki>`_
--  `Community Slack Channel <https://codeigniterchat.slack.com>`_
+```text
+Rij = Xij / Max(Xij)
+```
 
-Report security issues to our `Security Panel <mailto:security@codeigniter.com>`_
-or via our `page on HackerOne <https://hackerone.com/codeigniter>`_, thank you.
+Untuk kriteria **Cost**:
 
-***************
-Acknowledgement
-***************
+```text
+Rij = Min(Xij) / Xij
+```
 
-The CodeIgniter team would like to thank EllisLab, all the
-contributors to the CodeIgniter project and you, the CodeIgniter user.
+Nilai akhir alternatif dihitung dengan:
+
+```text
+Vi = Σ(Wj × Rij)
+```
+
+Alternatif dengan nilai **Vi** yang lebih tinggi memiliki peringkat yang lebih tinggi.
+
+## 🛠️ Tech Stack
+
+- **PHP**
+- **CodeIgniter 3**
+- **MySQL**
+- **HTML**
+- **CSS**
+- **JavaScript**
+- **Bootstrap**
+
+## 📊 Dataset
+
+Dataset yang digunakan terdiri dari **50 alternatif laptop** yang dikumpulkan dari marketplace seperti Shopee dan Tokopedia.
+
+Setiap laptop dinilai berdasarkan:
+
+- Harga
+- Processor
+- RAM
+- SSD
+- Baterai
+- Berat
+
